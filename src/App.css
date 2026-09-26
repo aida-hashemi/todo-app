@@ -74,3 +74,24 @@
   border-color: #4caf50;
   color: white;
 }
+.priority-tag {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin: 0 8px;
+}
+
+.priority-high {
+  background-color: #e53935;
+  color: white;
+}
+
+.priority-medium {
+  background-color: #f4a261;
+  color: white;
+}
+
+.priority-low {
+  background-color: #4caf50;
+  color: white;
+}

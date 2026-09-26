@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 function App() {
   const [newTaskText, setNewTaskText] = useState("");
+  const [newTaskPriority, setNewTaskPriority] = useState("medium");
   const [tasks, setTasks] = useState(() => {
     const saved = localStorage.getItem("tasks");
     if (saved) {
@@ -14,9 +15,15 @@ function App() {
   });
   const [filter, setFilter] = useState("all");
   function addTask() {
-    const newTask = { id: Date.now(), text: newTaskText, done: false };
+    const newTask = {
+      id: Date.now(),
+      text: newTaskText,
+      done: false,
+      priority: newTaskPriority,
+    };
     setTasks([...tasks, newTask]);
     setNewTaskText("");
+    setNewTaskPriority("medium");
   }
   function deleteTask(id) {
     setTasks(tasks.filter((task) => task.id !== id));
@@ -37,6 +44,12 @@ function App() {
     return true;
   });
   const remainingCount = tasks.filter((task) => !task.done).length;
+  function getPriorityClass(priority) {
+    if (priority === "high") return "priority-tag priority-high";
+    if (priority === "medium") return "priority-tag priority-medium";
+    if (priority === "low") return "priority-tag priority-low";
+    return "priority-tag";
+  }
 
   return (
     <div className="app">
@@ -77,6 +90,9 @@ function App() {
             style={{ textDecoration: task.done ? "line-through" : "none" }}
           >
             {task.text}
+            <span className={getPriorityClass(task.priority)}>
+              {task.priority}
+            </span>
             <button
               className="delete-button"
               onClick={(e) => {
@@ -94,6 +110,14 @@ function App() {
         value={newTaskText}
         onChange={(e) => setNewTaskText(e.target.value)}
       />
+      <select
+        value={newTaskPriority}
+        onChange={(e) => setNewTaskPriority(e.target.value)}
+      >
+        <option value="low">کم</option>
+        <option value="medium">متوسط</option>
+        <option value="high">زیاد</option>
+      </select>
       <button className="add-button" onClick={addTask}>
         افزودن
       </button>
